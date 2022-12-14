@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -22,11 +23,18 @@ public class JpaMain {
                 member.setName("HelloA");
                 em.persist(meㄴmber);
             */
-            /*수정*/
+            /*수정
             Member findMember = em.find(Member.class, 1L);
             //update 개념은 트랜잭션이 해당하는 객체에 대한 데이터를 가지고 있다가
             //마지막 트랜잭션 커밋 시점에서 바뀐 데이터가 있으면 update 해준다.
             findMember.setName("helloJPA");
+            */
+            //맴버 객체에 대한 값을 다 가져오게 돼있다.
+            List<Member> result = em.createQuery("select m from Member as m", Member.class)
+                    .getResultList();
+            for (Member member : result) {
+                System.out.println("member.name" + member.getName());
+            }
             //커밋
             tx.commit();
         } catch (Exception e) {
