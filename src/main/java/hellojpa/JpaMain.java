@@ -18,9 +18,9 @@ public class JpaMain {
         //트랜잭션 시작
         tx.begin();
         try {
-            Member member = em.find(Member.class, 1L);
+            em.persist(new Member(1L, "A"));
             Member member1 = em.find(Member.class,1L);
-            System.out.println(member == member1);
+            System.out.println(member1);
             /* 저장 */
             //비영속 상태
 //            em.persist(member);
