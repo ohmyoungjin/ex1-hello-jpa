@@ -18,6 +18,9 @@ public class JpaMain {
         //트랜잭션 시작
         tx.begin();
         try {
+            Member member = new Member();
+            member.setUsername("CC");
+            em.persist(member);
             //***트랜잭션 commit 하는 시점에서 영속성 컨텍스트에 있는 값들이 DB에 들어가게 된다
             tx.commit();
         } catch (Exception e) {
