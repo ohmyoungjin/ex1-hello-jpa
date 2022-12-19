@@ -1,18 +1,18 @@
-package hellojpa;
+package hellojpa.basic;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+//@Entity
 //시퀀스 한 번 호출에 증가하는 수(성능 최적화에 사용됨
 //데이터베이스 시퀀스 값이 하나씩 증가하도록 설정되어 있으면
 // 이 값 을 반드시 [1]로 설정해야 한다
 @SequenceGenerator(name = "member_seq_generator",
         sequenceName = "member_seq",
         initialValue = 1, allocationSize = 50)
-public class Member {
+public class MemberBasic {
 
-    public Member() {
+    public MemberBasic() {
     }
     //식별자 전략
     //기본 키 제약 조건: null 아님, 유일, 변하면 안된다.
