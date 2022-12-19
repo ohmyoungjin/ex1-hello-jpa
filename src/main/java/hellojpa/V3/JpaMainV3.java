@@ -20,28 +20,38 @@ public class JpaMainV3 {
         //트랜잭션 시작
         tx.begin();
         try {
+
             TeamV3 team = new TeamV3();
             team.setName("TeamA");
             em.persist(team);
-            //변경용 테이블
-            TeamV3 team2 = new TeamV3();
-            team2.setName("TeamB");
-            em.persist(team2);
 
             MemberV3 member = new MemberV3();
             member.setUsername("member1");
-            member.setTeam(team);
+            //**중요한 부분 연관 관계 주인한테 해당하는 FK를 넣어줘야 한다.
+            //member => team 순서로 가면 member Table에는 TEAM_ID = null 이 된다.
+            //insert 쿼리는 정상적으로 날아가기 때문에 디버깅이 힘들다.
+            member.changeTeam(team);
             em.persist(member);
+
+            //************************
+            //양방향 연관 관계인 경우 두 객체 양쪽에 key값을 세팅을 해줘야한다.
+            //해줘야 하는 이유 : 밑에서 em.flush , em.clear를 해주는 경우
+            //영속성 컨텍스트를 비운 후 다시 select 한 값을 가져오게 되지만
+            //밑의 flush , clear가 없는 경우 1차 캐시에 있는 member 객체의 값을 들고오기 때문에
+            //team_id = null이 나온다.
+            //양 쪽 다 key 세팅 해주자 !
+            //team.getMembers().add(member);
 
             em.flush();
             em.clear();
 
-            MemberV3 findMember = em.find(MemberV3.class, member.getId());
-            List<MemberV3> members = findMember.getTeam().getMembers();
+            TeamV3 findTeam = em.find(TeamV3.class, team.getId());
+            List<MemberV3> members = findTeam.getMembers();
 
             for (MemberV3 m : members) {
                 System.out.println("m = " + m.getUsername());
             }
+
             tx.commit();
         } catch (Exception e) {
                 tx.rollback();

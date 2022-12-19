@@ -27,6 +27,11 @@ public class TeamV3 {
     @OneToMany(mappedBy = "teamV3")
     private List<MemberV3> members = new ArrayList<>();
 
+    public void addMember(MemberV3 member) {
+        member.setTeamV3(this);
+        members.add(member);
+    }
+
     public Long getId() {
         return id;
     }

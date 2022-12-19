@@ -43,7 +43,13 @@ public class MemberV3 {
         return teamV3;
     }
 
-    public void setTeam(TeamV3 teamV3) {
+    public void setTeamV3(TeamV3 teamV3) {
         this.teamV3 = teamV3;
+    }
+
+    public void changeTeam(TeamV3 teamV3) {
+        this.teamV3 = teamV3;
+        //내 객체를 담아준다.
+        teamV3.getMembers().add(this);
     }
 }
