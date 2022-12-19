@@ -2,7 +2,7 @@ package hellojpa.V2;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @Table(name = "TEAM")
 public class TeamV2 {
 

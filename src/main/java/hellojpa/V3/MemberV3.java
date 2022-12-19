@@ -1,10 +1,10 @@
-package hellojpa.V2;
+package hellojpa.V3;
 
 import javax.persistence.*;
 
-//@Entity
+@Entity
 @Table(name = "MEMBER")
-public class MemberV2 {
+public class MemberV3 {
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -18,9 +18,9 @@ public class MemberV2 {
     @ManyToOne
     //관계에 대한 join column (foreign key)을 적어준다.
     @JoinColumn(name = "TEAM_ID")
-    private TeamV2 teamV2;
+    private TeamV3 teamV3;
 
-    public MemberV2() {
+    public MemberV3() {
     }
 
     public Long getId() {
@@ -39,11 +39,11 @@ public class MemberV2 {
         this.username = username;
     }
 
-    public TeamV2 getTeam() {
-        return teamV2;
+    public TeamV3 getTeam() {
+        return teamV3;
     }
 
-    public void setTeam(TeamV2 teamV2) {
-        this.teamV2 = teamV2;
+    public void setTeam(TeamV3 teamV3) {
+        this.teamV3 = teamV3;
     }
 }

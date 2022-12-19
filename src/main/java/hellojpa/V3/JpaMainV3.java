@@ -1,13 +1,14 @@
-package hellojpa.V2;
+package hellojpa.V3;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 
-//단방향 연관 관계
-public class JpaMainV2 {
+//양방향 연관 관계
+public class JpaMainV3 {
 
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence
@@ -19,32 +20,28 @@ public class JpaMainV2 {
         //트랜잭션 시작
         tx.begin();
         try {
-            TeamV2 team = new TeamV2();
+            TeamV3 team = new TeamV3();
             team.setName("TeamA");
             em.persist(team);
             //변경용 테이블
-            TeamV2 team2 = new TeamV2();
+            TeamV3 team2 = new TeamV3();
             team2.setName("TeamB");
             em.persist(team2);
 
-            MemberV2 member = new MemberV2();
+            MemberV3 member = new MemberV3();
             member.setUsername("member1");
-            //위에서 저장한 객체 자체를 가져와서 담아준다 !
-            //단방향 연관 관계, 참조 저장
             member.setTeam(team);
             em.persist(member);
-            em.flush();
-            MemberV2 findMember = em.find(MemberV2.class, member.getId());
-            //객체마다 FK , PK를 가져와서 사용하는 것이 아닌,
-            //FK , PK가 가지고 있는 객체 자체를 가져온다.
-            //참조로 연관 관계 조회 - 객체 그래프 탐색
-            TeamV2 findTeam = findMember.getTeam();
-            System.out.println("findTeam = " + findTeam.getName());
 
-            //연관 관계 수정
-            TeamV2 newTeam = em.find(TeamV2.class, 2L);
-            //Member 객체에 있는 (foreign key) 변경
-            findMember.setTeam(newTeam);
+            em.flush();
+            em.clear();
+
+            MemberV3 findMember = em.find(MemberV3.class, member.getId());
+            List<MemberV3> members = findMember.getTeam().getMembers();
+
+            for (MemberV3 m : members) {
+                System.out.println("m = " + m.getUsername());
+            }
             tx.commit();
         } catch (Exception e) {
                 tx.rollback();
