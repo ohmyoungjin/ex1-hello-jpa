@@ -2,7 +2,7 @@ package hellojpa.OneToN;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @Table(name = "MEMBER")
 public class MemberOTN1 {
 

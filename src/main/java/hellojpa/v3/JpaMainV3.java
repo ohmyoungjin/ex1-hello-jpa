@@ -25,13 +25,27 @@ public class JpaMainV3 {
             team.setName("TeamA");
             em.persist(team);
 
+            Locker locker = new Locker();
+            locker.setLockerName("1번");
+            em.persist(locker);
+
+            Locker locker2 = new Locker();
+            locker2.setLockerName("2번");
+            em.persist(locker2);
+
             MemberV3 member = new MemberV3();
             member.setUsername("member1");
             //**중요한 부분 연관 관계 주인한테 해당하는 FK를 넣어줘야 한다.
             //member => team 순서로 가면 member Table에는 TEAM_ID = null 이 된다.
             //insert 쿼리는 정상적으로 날아가기 때문에 디버깅이 힘들다.
             member.changeTeam(team);
+            member.changeLocker(locker);
             em.persist(member);
+
+            locker2.setLockerName("3번");
+            MemberV3 findMember = em.find(MemberV3.class, member.getId());
+            findMember.setLocker(locker2);
+
 
             //************************
             //양방향 연관 관계인 경우 두 객체 양쪽에 key값을 세팅을 해줘야한다.
@@ -41,16 +55,6 @@ public class JpaMainV3 {
             //team_id = null이 나온다.
             //양 쪽 다 key 세팅 해주자 !
             //team.getMembers().add(member);
-
-            em.flush();
-            em.clear();
-
-            TeamV3 findTeam = em.find(TeamV3.class, team.getId());
-            List<MemberV3> members = findTeam.getMembers();
-
-            for (MemberV3 m : members) {
-                System.out.println("m = " + m.getUsername());
-            }
 
             tx.commit();
         } catch (Exception e) {

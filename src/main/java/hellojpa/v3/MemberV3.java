@@ -2,7 +2,7 @@ package hellojpa.v3;
 
 import javax.persistence.*;
 
-//@Entity
+@Entity
 @Table(name = "MEMBER")
 public class MemberV3 {
 
@@ -19,6 +19,10 @@ public class MemberV3 {
     //관계에 대한 join column (foreign key)을 적어준다.
     @JoinColumn(name = "TEAM_ID")
     private TeamV3 teamV3;
+
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
 
     public MemberV3() {
     }
@@ -51,5 +55,18 @@ public class MemberV3 {
         this.teamV3 = teamV3;
         //내 객체를 담아준다.
         teamV3.getMembers().add(this);
+    }
+
+    public Locker getLocker() {
+        return locker;
+    }
+
+    public void changeLocker(Locker locker) {
+        this.locker = locker;
+        locker.setMember(this);
+    }
+
+    public void setLocker(Locker locker) {
+        this.locker = locker;
     }
 }
