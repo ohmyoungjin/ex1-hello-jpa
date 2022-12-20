@@ -1,8 +1,8 @@
-package hellojpa.V3;
+package hellojpa.v3;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @Table(name = "MEMBER")
 public class MemberV3 {
 

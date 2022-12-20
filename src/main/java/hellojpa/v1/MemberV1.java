@@ -1,4 +1,4 @@
-package hellojpa.V1;
+package hellojpa.v1;
 
 import javax.persistence.*;
 

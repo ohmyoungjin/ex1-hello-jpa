@@ -1,18 +1,18 @@
-package hellojpa.V1;
+package hellojpa.s1;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 //@Entity
-public class TeamV1 {
-
-    @Id
-    @GeneratedValue
+@Table(name = "TEAM")
+public class TeamS1 {
+    @Id @GeneratedValue
     @Column(name = "TEAM_ID")
     private Long id;
+
     private String name;
+
+    public TeamS1() {
+    }
 
     public Long getId() {
         return id;

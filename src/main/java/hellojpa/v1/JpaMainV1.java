@@ -1,4 +1,4 @@
-package hellojpa.V1;
+package hellojpa.v1;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -22,7 +22,7 @@ public class JpaMainV1 {
             //연관 관계가 있는 teamId로 해당하는 객체를 다시 찾아야 하는 번거로움이 있다.
             //이렇게 디자인 된 엔티티들은 객체지향적이 아닌 테이블을 객체 지향으로 맞춰 넣은 것이다.
             TeamV1 teamV1 = new TeamV1();
-            teamV1.setName("TeamA");
+            teamV1.setName("TeamBB");
             em.persist(teamV1);
 
             MemberV1 member = new MemberV1();
@@ -30,10 +30,10 @@ public class JpaMainV1 {
             member.setTeamId(teamV1.getId());
             em.persist(member);
 
-            MemberV1 findMember = em.find(MemberV1.class, member.getId());
-
-            Long findTeamId = findMember.getTeamId();
-            TeamV1 findTeamV1 = em.find(TeamV1.class, findTeamId);
+//            MemberV1 findMember = em.find(MemberV1.class, member.getId());
+//
+//            Long findTeamId = findMember.getTeamId();
+//            TeamV1 findTeamV1 = em.find(TeamV1.class, findTeamId);
 
 
             tx.commit();

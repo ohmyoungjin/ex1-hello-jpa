@@ -1,10 +1,10 @@
-package hellojpa.V3;
+package hellojpa.v3;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+//@Entity
 @Table(name = "TEAM")
 public class TeamV3 {
 

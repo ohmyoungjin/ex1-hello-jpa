@@ -1,10 +1,10 @@
-package hellojpa.V2;
+package hellojpa.v1;
 
 import javax.persistence.*;
 
 //@Entity
 @Table(name = "TEAM")
-public class TeamV2 {
+public class TeamV1 {
 
     @Id
     @GeneratedValue

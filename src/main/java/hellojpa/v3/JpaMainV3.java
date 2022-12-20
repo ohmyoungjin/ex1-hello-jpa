@@ -1,4 +1,4 @@
-package hellojpa.V3;
+package hellojpa.v3;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
