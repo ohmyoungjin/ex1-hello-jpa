@@ -2,7 +2,7 @@ package hellojpa.s3;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @Table(name = "MEMBER")
 public class MemberS3 {
 

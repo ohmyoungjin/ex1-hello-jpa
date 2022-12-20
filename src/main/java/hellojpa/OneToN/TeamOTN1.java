@@ -1,12 +1,12 @@
-package hellojpa.s3;
+package hellojpa.OneToN;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Entity
+@Entity
 @Table(name = "TEAM")
-public class TeamS3 {
+public class TeamOTN1 {
 
     @Id @GeneratedValue
     @Column(name = "TEAM_ID")
@@ -14,19 +14,10 @@ public class TeamS3 {
 
     private String name;
 
-    //매핑된 객체 이름 적어준다. (ManyToOne에 기재된 객체이름 적어주면 된다)
-    @OneToMany(mappedBy = "team")
-    private List<MemberS3> memberList = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "TEAM_ID")
+    private List<MemberOTN1> memberList = new ArrayList<>();
 
-    //연관 관계 편의 메서드
-    public void addMember(MemberS3 member) {
-        member.setTeam(this);
-        memberList.add(member);
-    }
-
-    public TeamS3() {
-
-    }
     public Long getId() {
         return id;
     }
@@ -43,11 +34,11 @@ public class TeamS3 {
         this.name = name;
     }
 
-    public List<MemberS3> getMemberList() {
+    public List<MemberOTN1> getMemberList() {
         return memberList;
     }
 
-    public void setMemberList(List<MemberS3> memberList) {
+    public void setMemberList(List<MemberOTN1> memberList) {
         this.memberList = memberList;
     }
 }
