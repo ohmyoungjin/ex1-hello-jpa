@@ -2,7 +2,7 @@ package hellojpa.v3;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 public class Locker {
 
     @Id @GeneratedValue
@@ -12,8 +12,8 @@ public class Locker {
     @Column(name = "LOCKER_NAME")
     private String lockerName;
 
-    @OneToOne(mappedBy = "locker")
-    private MemberV3 member;
+//    @OneToOne(mappedBy = "locker")
+//    private MemberV3 member;
 
     public Long getId() {
         return id;
@@ -31,11 +31,11 @@ public class Locker {
         this.lockerName = lockerName;
     }
 
-    public MemberV3 getMember() {
-        return member;
-    }
-
-    public void setMember(MemberV3 member) {
-        this.member = member;
-    }
+//    public MemberV3 getMember() {
+//        return member;
+//    }
+//
+//    public void setMember(MemberV3 member) {
+//        this.member = member;
+//    }
 }

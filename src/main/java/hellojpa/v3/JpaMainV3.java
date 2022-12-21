@@ -1,5 +1,7 @@
 package hellojpa.v3;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -23,7 +25,6 @@ public class JpaMainV3 {
         try {
             MemberV3 member = new MemberV3();
             member.setUsername("myoung");
-            member.setCreateBy("oh");
             member.setCreatedDate(LocalDateTime.now());
 
             em.persist(member);
@@ -31,14 +32,35 @@ public class JpaMainV3 {
             em.flush();
             em.clear();
 
+            MemberV3 findMemberPRX = em.getReference(MemberV3.class, member.getId());
+            System.out.println("findMemberPRX = " + findMemberPRX.getClass());
+            Hibernate.initialize(findMemberPRX);
+            System.out.println("강제초기화 이후 : " + (emf.getPersistenceUnitUtil().isLoaded(findMemberPRX)));
+
             tx.commit();
         } catch (Exception e) {
                 tx.rollback();
+            System.out.println("Exception : " + e);
         } finally {
             //code 작성 이후 manager 및 factory 닫아주면 됨
             // jdbc 쓰는 것과 비슷함 resultset, connection 닫는 느낌?
             em.close();
         }
         emf.close();
+    }
+
+    private static void getPrintMember(MemberV3 member) {
+        System.out.println("findMember id  = " + member.getId());
+        System.out.println("findMember useranme  = " + member.getUsername());
+
+    }
+
+    private static void getPrintMemberAndTeam(MemberV3 member) {
+        String userName = member.getUsername();
+        System.out.println("userName = " + userName);
+
+        TeamV3 findTeam = member.getTeam();
+        System.out.println("findTeam = " + findTeam.getName());
+
     }
 }
