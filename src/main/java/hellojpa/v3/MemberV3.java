@@ -2,9 +2,9 @@ package hellojpa.v3;
 
 import javax.persistence.*;
 
-//@Entity
+@Entity
 @Table(name = "MEMBER")
-public class MemberV3 {
+public class MemberV3 extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
