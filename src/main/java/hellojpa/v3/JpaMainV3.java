@@ -20,33 +20,30 @@ public class JpaMainV3 {
         //트랜잭션 시작
         tx.begin();
         try {
-            TeamV3 team = new TeamV3();
-            team.setName("AA");
-            em.persist(team);
 
-            TeamV3 team2 = new TeamV3();
-            team2.setName("BB");
-            em.persist(team2);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            MemberV3 member = new MemberV3();
-            member.setUsername("myoung");
-            member.setCreatedDate(LocalDateTime.now());
-            member.changeTeam(team);
-            em.persist(member);
 
-            MemberV3 member2 = new MemberV3();
-            member2.setUsername("myoung2");
-            member2.setCreatedDate(LocalDateTime.now());
-            member2.changeTeam(team2);
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-            em.persist(member2);
+            em.persist(parent);
 
             em.flush();
             em.clear();
 
-//            MemberV3 findMember = em.find(MemberV3.class, member.getId());
-            List<MemberV3> members = em.createQuery("select m from MemberV3 m join fetch m.teamV3", MemberV3.class)
-                    .getResultList();
+            Parent findParent = em.find(Parent.class, parent.getId());
+
+            em.remove(findParent.getId());
+            //영속성 전이를 통한 자식 엔티티 자동 persist
+            //em.persist(child1);
+            //em.persist(child2);
+
+
+
+
 
             tx.commit();
         } catch (Exception e) {
