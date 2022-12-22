@@ -2,10 +2,7 @@ package hellojpa.v3;
 
 import org.hibernate.Hibernate;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,19 +20,33 @@ public class JpaMainV3 {
         //트랜잭션 시작
         tx.begin();
         try {
+            TeamV3 team = new TeamV3();
+            team.setName("AA");
+            em.persist(team);
+
+            TeamV3 team2 = new TeamV3();
+            team2.setName("BB");
+            em.persist(team2);
+
             MemberV3 member = new MemberV3();
             member.setUsername("myoung");
             member.setCreatedDate(LocalDateTime.now());
-
+            member.changeTeam(team);
             em.persist(member);
+
+            MemberV3 member2 = new MemberV3();
+            member2.setUsername("myoung2");
+            member2.setCreatedDate(LocalDateTime.now());
+            member2.changeTeam(team2);
+
+            em.persist(member2);
 
             em.flush();
             em.clear();
 
-            MemberV3 findMemberPRX = em.getReference(MemberV3.class, member.getId());
-            System.out.println("findMemberPRX = " + findMemberPRX.getClass());
-            Hibernate.initialize(findMemberPRX);
-            System.out.println("강제초기화 이후 : " + (emf.getPersistenceUnitUtil().isLoaded(findMemberPRX)));
+//            MemberV3 findMember = em.find(MemberV3.class, member.getId());
+            List<MemberV3> members = em.createQuery("select m from MemberV3 m join fetch m.teamV3", MemberV3.class)
+                    .getResultList();
 
             tx.commit();
         } catch (Exception e) {
