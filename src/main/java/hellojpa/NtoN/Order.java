@@ -3,7 +3,7 @@ package hellojpa.NtoN;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+//@Entity
 @Table(name = "ORDERS")
 public class Order {
 

@@ -2,7 +2,7 @@ package hellojpa.v3;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn()
 public abstract class Item{
