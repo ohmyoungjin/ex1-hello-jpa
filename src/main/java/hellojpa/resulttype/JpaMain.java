@@ -22,12 +22,23 @@ public class JpaMain {
         //트랜잭션 시작
         tx.begin();
         try {
-            Member member = new Member();
-            member.setUsername("maneg2");
-            member.setHomeAddress(new Address("city", "street", "1000"));
-            member.setPeriod(new Period(LocalDateTime.now(), LocalDateTime.now()));
+            Address address = new Address("city", "street", "1000");
 
-            em.persist(member);
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            member1.setHomeAddress(address);
+            member1.setPeriod(new Period(LocalDateTime.now(), LocalDateTime.now()));
+            em.persist(member1);
+
+
+            Member member2 = new Member();
+            member2.setUsername("member2");
+            member2.setHomeAddress(address);
+            member2.setPeriod(new Period(LocalDateTime.now(), LocalDateTime.now()));
+            em.persist(member2);
+
+            member1.getAddress().setCity("new City");
+
 
             tx.commit();
         } catch (Exception e) {
