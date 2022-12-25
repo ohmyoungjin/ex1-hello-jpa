@@ -36,9 +36,15 @@ public class JpaMain {
             member2.setHomeAddress(address);
             member2.setPeriod(new Period(LocalDateTime.now(), LocalDateTime.now()));
             em.persist(member2);
-
-            member1.getAddress().setCity("new City");
-
+            //공유 참조 복사로 인한 원하지 않는 값이 같이 변경될 수 있다.
+            //이를 해결하기 위해
+            //생성자로만 값을 설정하고 수정자를 만들지 않으면 된다.
+            //member1.getAddress().setCity("new City");
+            //해결방안 1)=>
+            member1.setHomeAddress(new Address("new City", "street,", "10000"));
+            //해결방안 2)=>
+            //Address newAddress = new Address("new City", "street,", "10000");
+            //member1.setHomeAddress(newAddress);
 
             tx.commit();
         } catch (Exception e) {
