@@ -3,10 +3,14 @@ package hellojpa.resulttype;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "MEMBER")
-public class Member extends BaseEntity{
+public class Member{
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -22,6 +26,21 @@ public class Member extends BaseEntity{
     //집 주소
     @Embedded
     private Address homeAddress;
+
+    @ElementCollection
+    @CollectionTable(name = "FAVORITE_FOOD", joinColumns =
+    @JoinColumn(name = "MEMBER_ID"))
+    @Column(name = "FOOD_NAME")
+    private Set<String> favoriteFoods = new HashSet<>();
+
+//    @ElementCollection
+//    @CollectionTable(name = "ADDRESS", joinColumns =
+//    @JoinColumn(name = "MEMBER_ID"))
+//    private List<Address> addressesHistory = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "MEMBER_ID")
+    private List<AddressEntity> addressList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -53,5 +72,25 @@ public class Member extends BaseEntity{
 
     public void setHomeAddress(Address homeAddress) {
         this.homeAddress = homeAddress;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public Set<String> getFavoriteFoods() {
+        return favoriteFoods;
+    }
+
+    public void setFavoriteFoods(Set<String> favoriteFoods) {
+        this.favoriteFoods = favoriteFoods;
+    }
+
+    public List<AddressEntity> getAddressList() {
+        return addressList;
+    }
+
+    public void setAddressList(List<AddressEntity> addressList) {
+        this.addressList = addressList;
     }
 }
